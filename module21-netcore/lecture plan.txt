@@ -1,0 +1,110 @@
+Intor
+	What is NetCore
+		OpenSource
+		Cross-platform
+		Command-line tools
+
+Setup
+	Go to https://www.microsoft.com/net/download
+	Difference between sdk and runtime		
+	
+We're going to use only cross platform tools
+	
+dotnet
+	dotnet new
+			console -h
+			web -h
+		AdminConsole folder
+		explain cspoj features
+			Output
+			TargetFramework	
+	dotnet restore - new folder: obj		
+		isn't required for new, build, build-server, run, test, publish, pack		
+		but useful for debugging purposes
+	dotnet build - new folder: bin	
+	dotent run
+		only for csproj
+	dotnet AdminConsole.dll			
+	dotent clean	
+	dotnet build -c Release	
+	dotent clean --configuration Release
+	dotnet publish 
+		framework-dependent deployment
+			dotnet publish -c Release -f netcoreapp2.1
+			no exe file found
+		self-contained deployment
+			<RuntimeIdentifiers>win10-x64;ubuntu.16.04-x64</RuntimeIdentifiers>
+			https://docs.microsoft.com/en-us/dotnet/core/rid-catalog
+			dotnet publish -c Release -r ubuntu.16.04-x64	
+				./AdminConsole
+			dotnet publish -c Release -r win10-x64
+				./AdminConsole.exe
+	
+	Domain folder 
+	dotnet new classlib	
+	dotnet add reference ../Domain/Domain.csproj		
+	
+	Tests folder
+	dotnet new nunit
+	dotnet add reference ../Tests
+	
+	dotnet test
+	dotnet test -t
+	dotnet test --filter Test1
+	
+	Open VS Code
+		Generate assets
+		Create AssesmentService
+		Run in vs code
+		Update tasks.json
+		
+	dotnet run
+	dotnet run -- 5
+	dotnet AdminConsole.dll 5
+	
+	Open VS Code
+		Tests.csproj
+		pay attention on "Microsoft.NET.Test.Sdk"
+		<ProjectReference Include="..\Domain\Domain.csproj" />
+		Create test and run in in VS Code
+	
+	Packages
+		Tests.cspoj <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+		dotnet add package Newtonsoft.Json
+		 
+	<AssemblyName>Epam.AdminConsole</AssemblyName>
+    <RootNamespace>Epam.AdminConsole</RootNamespace>
+		 
+	TargetFrameworks
+		<TargetFrameworks>netcoreapp2.1;net462</TargetFrameworks>
+		get error about tests
+		add to Tests.csproj
+		#if NET462 ...
+		
+	Why we didn't get the same error for Domain.csproj
+	NetStandard: https://docs.microsoft.com/en-us/dotnet/standard/net-standard
+
+	dotnet new web
+		explain Program.cs
+			UseStartup
+		explain Startup.cs
+		
+		curl http://localhost:5000
+		
+	go to launchSettings.json
+	
+	dotnet new sln
+	dotnet sln list
+	dotnet sln add AdminConsole	
+	
+	Open Visual Studio
+		Show namespaces example
+	
+FAQ:
+	Xamarin, Unity, Mono?
+	net-core vs net-standard	
+
+Resources:
+	https://docs.microsoft.com/en-us/dotnet/core/
+	https://www.microsoft.com/net/download/linux-package-manager/ubuntu16-04/sdk-current
+	
