@@ -1,0 +1,37 @@
+Intro
+	SQL and relational model
+	
+	Reuse:
+		mapping
+		migrations
+		change tracking
+	Other problems:
+		Database and model consistency
+		Static typization
+
+ADO.NET
+	Show sql script
+	Run Ado.Net test
+	What's wrong?
+		DB Schema
+		No mappings
+		Query as string (no validation)
+		A lot of useless code
+		
+Definition		
+	ORM: Object-Relational Mapping
+	Pros:
+		Simple,
+		Reuse,
+		Additional features
+	Cons:
+		Additional difficulties,
+		Hard to write complicated query properly
+		
+Entity Framework
+	Story
+	Required dependencies
+		Microsoft.EntityFrameworkCore
+		Npgsql.EntityFrameworkCore.PostgreSQL
+		
+	
