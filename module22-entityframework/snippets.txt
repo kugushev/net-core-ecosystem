@@ -1,0 +1,110 @@
+Model
+[Including & Excluding Types]	
+	class Student
+    {      
+		...
+        public University University { get; set; }
+    }
+
+    class University
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    class Lesson
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public DateTime Date { get; set; }
+    }
+	
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Lesson>();
+    }
+	
+[Including & Excluding Properties]
+	class Student
+    {
+        [NotMapped]
+        public int Counter { get; set; }
+    }
+	
+	class University
+    {
+        public int Counter { get; set; }
+    }
+	
+[Keys (primary)]
+	class University
+    {
+        [Key]
+        public string GovNum { get; set; }
+        public string Name { get; set; }
+        public int Counter { get; set; }
+    }
+
+    class LegalEntity
+    {
+        public string Name { get; set; }
+        public string Registration { get; set; }
+    }
+[Relationships]
+	class Student
+    {
+        public int? GroupId { get; set; }
+        public Group Group { get; set; }
+    }
+	class Group
+    {
+        public int Id { get; set; }
+        public string Number { get; set; }
+        public List<Student> Students { get; set; }
+    }
+	...
+	class Student
+    {        
+		public int? InterviewGroupId { get; set; }       
+        public Group InterviewGroup { get; set; }
+    }
+	class Group
+    {
+        [InverseProperty("Group")]
+        public List<Student> Students { get; set; }
+        [InverseProperty("InterviewGroup")]
+        public List<Student> Interviewers { get; set; }
+    }
+	...
+    class Lesson
+    {        
+        public List<LessonTeacher> LessonTeachers { get; set; }
+    }
+
+    class Teacher
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public List<LessonTeacher> LessonTeachers { get; set; }
+    }
+
+    class LessonTeacher
+    {
+        public int LessonId { get; set; }
+        public Lesson Lesson { get; set; }
+        public int TeacherId { get; set; }
+        public Teacher Teacher { get; set; }        
+    }
+	modelBuilder.Entity<LessonTeacher>().HasKey(x => new { x.LessonId, x.TeacherId });
+    modelBuilder.Entity<LessonTeacher>()
+                .HasOne(x => x.Lesson)
+                .WithMany(x => x.LessonTeachers)
+                .HasForeignKey(x => x.LessonId);
+	modelBuilder.Entity<LessonTeacher>()
+                .HasOne(x => x.Teacher)
+                .WithMany(x => x.LessonTeachers)
+                .HasForeignKey(x => x.TeacherId);
+[Saving Data]
+	public DbSet<Lesson> Lessons { get; set; }        
+    public DbSet<Teacher> Teachers { get; set; }
+				

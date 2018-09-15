@@ -29,6 +29,9 @@ Entity Framework
 		Microsoft.EntityFrameworkCore
 		Microsoft.EntityFrameworkCore.Design
 		Npgsql.EntityFrameworkCore.PostgreSQL
+	Show context
+		Student property
+		OnConfiguring
 	Show test
 	
 Database Schema
@@ -43,5 +46,113 @@ Database Schema
 	Go to Database and investigate
 
 Model
+	How to configure:
+		Conventions
+		Attributes (System.ComponentModel.DataAnnotations)
+		Fluent API
+	Including & Excluding Types
+		Create University and property to Student	
+		Create Lesson
+		dotnet ef migrations add AddUniversityAndLesson	
+		Go to database and try to find Lesson
+		modelBuilder.Entity<Lesson>();
+		dotnet ef migrations add AddLessonToModel
+		? excluding: [NotMapped], modelBuilder.Ignore<>();
+	Including & Excluding Properties
+		[NotMapped]
+			Layring arcitecture: try to avoid use it in Domain layer
+		modelBuilder.Entity<University>().Ignore(x => x.Counter);
+	Keys (primary)
+		Conventions: Id or <type name>Id
+		[Key]
+		modelBuilder.Entity<LegalEntity>().HasKey(x => x.Name);
+		modelBuilder.Entity<LegalEntity>().HasKey(x => new { x.Name, x.Registration });
+	Generated Values
+		No value generation, Value generated on add, Value generated on add or update
+			By convention: non-composite primary keys - short, int, long, Guid = generated on add. 
+				All other properties will be setup with no value generation.
+		[DatabaseGenerated(DatabaseGeneratedOption.None)] o LessonId
+		Go to database
+		? modelBuilder.HasPostgresExtension("uuid-ossp");
+		? modelBuilder.Entity<Lesson>().Property(b => b.LessonGuid).HasDefaultValueSql("uuid_generate_v4()");
+			https://www.npgsql.org/efcore/value-generation.html
+	Required and Optional Properties	
+		Convention: nullable and notnull types
+		[Required] to Student.Name
+		modelBuilder.Entity<Lesson>().Property(x => x.Name).IsRequired();
+		Lesson.Date?
+		Go to database
+	Maximum Length
+		Only for string and byte[]
+		Conventions: depends on database provider
+		[MaxLength(512)] to Student.Name
+		modelBuilder.Entity<University>().Property(x => x.Name).HasMaxLength(256);
+		Go to database
+	? Concurrency Tokens
+		optimistic concurrency control
+		[ConcurrencyCheck],	[Timestamp]
+	? Shadow Properties
+		var result = context.Students.Select(x => EF.Property<string>(x, "UniversityGovNum")).FirstOrDefault();
+		modelBuilder.Entity<LegalEntity>().Property<DateTime>("LastUpdated");
+	Relationships
+		Dependent entity - contains FK
+		Principal entity - contains PK
+		Say about FK/PK
+		Navigation property - dependend Dependent or Principal entity: 
+			Collection, Reference
+			Inverse - on the other end of the relationship
+		Convention: has navigation propert if type is not SCALAR by current DB provider
+		Types:
+			Fully Defined Relationships
+			No Foreign Key Property (remove GroupId)
+			Single Navigation Property (remove public List<Student> Students { get; set; })
+		Default: 
+			IsRequired = true: Cascade Delete
+			IsRequired = false: ClientSetNull 
+		[ForeignKey("Group_Id")] public Group Group { get; set; }
+		multiple navigation properties => [InverseProperty] go to snippet
+		modelBuilder.Entity<University>().HasMany<Group>();
+        modelBuilder.Entity<University>().HasOne<LegalEntity>();
+		One-to-one - simple
+		Many-to-many - say about problems in the past + LessonTeacher
+	Indexes	
+		Only fluent api
+		modelBuilder.Entity<Student>().HasIndex(x => x.Name);
+		Add Student.GovNum
+		modelBuilder.Entity<Student>().HasIndex(x => x.GovNum).IsUnique();
+	? Alternate Keys
+		relations - HasPrincipalKey
+	? Inheritance	
+		Entity - HasBaseType
+	? Backing Fields
+		there are conventions (as usual) + fluentAPI
+		for immutability and Get/Set method
+	? Conversion
+		Entity.Property.HasConversion
+		i.e. Enum to string
+	? Data Seeding
+		Entity - HasData
+	Entity types with constructors
+		it maps to arguments (net core 2.1)
+Saving Data
+	Run C test
+	Show error info
+	[Table]
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
