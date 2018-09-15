@@ -1,0 +1,63 @@
+Вступление
+	SQL и реляционная модель везде одинакова	
+	Много кода для
+		Маппинг
+		Миграции
+		Отслеживание изменений в сущности в процессе работы
+	Другие проблемы
+		Поддержка идентичности базы данных и модели
+		Запросы не строго типизированны
+	
+	Сложные запросы не всегда нужны
+	
+		
+Знакомство
+	Рассмотрим как мы работаем с AdoNet
+		Что можно улучшить?	
+		
+	Посмотрим на NetCore
+		Сравним с AdoNet
+		
+	Почему они понимают схему?		
+
+		
+	Попробуем добавить сущность
+		Но мы же забыли добавить id!
+		
+Построение базы
+	Миграции
+		dotnet ef migrations add InitialCreate
+		dotnet ef database update
+	
+	Конфигурируем модель:
+		Сущности мапятся так как представлены в контексте: 
+			DbContext, property, OnMOdelCreating ( modelBuilder.Entity<...>)
+		А что если у нас не сходятся сущности с таблицами: 
+			переименованная или отсутсвующая колонка
+				FluentAPI
+				Attributes
+		Первичный ключ:
+			Конвенции (Id, <type name>Id)
+			Аттрибут Key
+			FluentAPI Entity<>().HasKey(x => x.Id)
+			Сложные ключи: Entity<>().HasKey(x => new { x.Id, x.StudentId })
+				Скажите, зачем нужен composite key?
+		DatabaseGenerated - .ValueGenerated()
+		Required - .IsRequired()
+		MaxLength - .HasMaxLength()
+		
+		
+		
+		
+Advanced
+	Concurrency
+		[ConcurrencyCheck]
+		[Timestamp]
+	Shadow Properties
+	
+	
+	
+	
+	
+	
+		
