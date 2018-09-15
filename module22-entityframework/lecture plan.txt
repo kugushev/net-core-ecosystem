@@ -19,19 +19,29 @@ ADO.NET
 		A lot of useless code
 		
 Definition		
-	ORM: Object-Relational Mapping
-	Pros:
-		Simple,
-		Reuse,
-		Additional features
-	Cons:
-		Additional difficulties,
-		Hard to write complicated query properly
+	ORM - Object-Relational Mapping
+	Pros: simple, reusable, additional features
+	Cons: additional difficulties, hard to write complicated query properly
 		
 Entity Framework
 	Story
 	Required dependencies
 		Microsoft.EntityFrameworkCore
+		Microsoft.EntityFrameworkCore.Design
 		Npgsql.EntityFrameworkCore.PostgreSQL
-		
+	Show test
+	
+Database Schema
+	Delete current DB
+	dotnet ef
+		say about .Design packages
+	dotnet ef migrations add InitialCreate
+	dotnet ef migrations	
+	dotnet ef database update
+		it's took connection string from config/code
+	
+	Go to Database and investigate
+
+Model
+	
 	

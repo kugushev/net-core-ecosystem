@@ -21,8 +21,18 @@ namespace Samples.EfCore
                 }
             }
         }
-        
 
+        [TestMethod]
+        public void B_SimpleExampleLin()
+        {
+            using (var context = new SamplesContext())
+            {
+                foreach (var student in context.Students.Where(x => x.UniversityDegree))
+                {
+                    Debug.WriteLine($"{student.Id}; {student.Name}");
+                }
+            }
+        }
 
     }
 }
