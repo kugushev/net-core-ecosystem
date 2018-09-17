@@ -40,7 +40,8 @@ namespace Samples.EfCore
         {
             using (var context = new SamplesContext())
             {
-                var result = context.Students.Select(x => EF.Property<string>(x, "UniversityGovNum")).FirstOrDefault();
+                var result = context.Students
+                    .Select(x => EF.Property<string>(x, "UniversityGovNum")).FirstOrDefault();
                 Debug.WriteLine(result);
             }
         }
@@ -59,7 +60,8 @@ namespace Samples.EfCore
                 context.Add(new Lesson { Id = 25, Date = new DateTime(2018, 9, 28), Name = "Docker" });
                 context.Add(new Lesson { Id = 26, Date = new DateTime(2018, 10, 1), Name = "Cloud" });
                 context.Add(new Lesson { Id = 27, Date = new DateTime(2018, 10, 4), Name = "Cloud" });
-                context.Add(new Lesson { Id = 28, Date = new DateTime(2018, 10, 5), Name = "How to become a millionaire" });
+                context.Add(new Lesson { Id = 28, Date = new DateTime(2018, 10, 5), 
+                    Name = "How to become a millionaire" });
 
                 context.Teachers.Add(new Teacher { Name = "Aleksandr Kugushev" });
                 context.Teachers.Add(new Teacher { Name = "Natalia Tcvilikh" });
@@ -97,7 +99,7 @@ namespace Samples.EfCore
             {
                 var lesson = new Lesson
                 {
-                    Id = 20,
+                    Id = 19,
                     Date = new DateTime(2018, 9, 10),
                     Name = "ADO NET",
                     LessonTeachers = new List<LessonTeacher>
@@ -106,6 +108,7 @@ namespace Samples.EfCore
                         {
                             Teacher = new Teacher
                             {
+                                Id  = 3,
                                 Name = "Igor Pavlovskiy"
                             }
                         }

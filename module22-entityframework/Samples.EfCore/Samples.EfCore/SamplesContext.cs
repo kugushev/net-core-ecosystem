@@ -19,10 +19,18 @@ namespace Samples.EfCore
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLoggerFactory(new LoggerFactory());
-            optionsBuilder.UseNpgsql(@"UserID=postgres;Password=p@ssw0rd;Host=localhost;Port=5432;Database=sample");
+            optionsBuilder.UseNpgsql(@"UserID=postgres;Password=debug;Host=localhost;Port=5432;Database=sample");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Student>().Ignore(x => x.Counter);
+            modelBuilder.Entity<Bar>();
+            modelBuilder.Entity<LegalEntity>().HasKey(x => new { x.EGRUL, x.INN });
+            modelBuilder.Entity<Student>().Property(x => x.Name).HasColumnName("FullName");
+            modelBuilder.Entity<Student>().HasOne<Bar>(x => x.NegativeBar);
+            modelBuilder.Entity<Bar>().HasMany<Student>(x => x.BadStudents).WithOne("NegativeBar");
+            modelBuilder.Entity<Student>().HasIndex(x => x.Sex);
+            modelBuilder.Entity<Student>().HasIndex(x => x.Name).IsUnique();
             #region Spoilers
             modelBuilder.Entity<LessonTeacher>().HasKey(x => new { x.LessonId, x.TeacherId });
             modelBuilder.Entity<LessonTeacher>()
@@ -37,17 +45,53 @@ namespace Samples.EfCore
         }
 
     }
-
-
-
-
+    
     class Student
     {
         public int Id { get; set; }
+
+        [Required]
         public string Name { get; set; }
+
+        [Column("UniDegree")]
         public bool UniversityDegree { get; set; }
+
+        public bool? Sex { get; set; }
+
+        public int Counter { get; set; }
+
+        public Unversity University { get; set; }
+
+        [ForeignKey("FavoriteBarId")]
+        public Bar FavoriteBar { get; set; }
+
+        public Bar NegativeBar { get; set; }
+
     }
 
+    class Unversity
+    {
+        [Key]
+        public string GovNum { get; set; }
+    }
+
+    class LegalEntity
+    {
+        public string EGRUL { get; set; }
+        public string INN { get; set; }
+
+        public Guid SuperId { get; set; }
+    }
+
+
+    class Bar
+    {
+        public int BarId { get; set; }
+        public string Name { get; set; }
+        [InverseProperty(nameof(Student.FavoriteBar))]
+        public List<Student> GoodStudents { get; set; }
+        public List<Student> BadStudents { get; set; }
+    }
 
 
     #region Spoiler
