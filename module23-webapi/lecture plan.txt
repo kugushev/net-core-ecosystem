@@ -1,0 +1,37 @@
+Intro
+	Microservices
+	Soap vs Rest
+Rest	
+	Go to https://en.wikipedia.org/wiki/Representational_state_transfer
+	explain
+	
+AspNet
+	dotnet new
+	active vs static pages
+	server side vs client side rendering
+	Mvc vs WebApi
+
+Hosting
+	public Startup(IHostingEnvironment env, IConfiguration config, ILoggerFactory loggerFactory)
+
+Middlewares
+	IsDevelopment
+	show web site
+	Use - Run
+	middleware as method/class
+	Map
+	
+	
+AspNetWebApi
+	ApiController
+	Route
+	
+	
+	
+Validation
+
+
+Swagger
+
+Configuration
+	Options pattern
