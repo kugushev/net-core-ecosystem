@@ -4,6 +4,14 @@ Intro
 Rest	
 	Go to https://en.wikipedia.org/wiki/Representational_state_transfer
 	explain
+	GET
+	POST
+	PUT - idempotent
+	DELETE
+	PATCH
+	Response:
+		OK, Created(201), Accepted(202), No Content (204)
+
 	
 AspNet
 	dotnet new
@@ -11,27 +19,82 @@ AspNet
 	server side vs client side rendering
 	Mvc vs WebApi
 
+dotnet new webapi
+
+Investigate
+	Startup
+	Controller
+	[ApiController]
+		 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+		 inheritance isn't required
+		 features: auto validation, From.. coventions, only strict routing
+	open postman
+	
+Add Students
+	StudentsController
+	Routing
+		[Route]
+		[Http...()]
+		"/step/{name}/{id?}"
+	From
+		FromBody - is inferred for complex type parameters. Except: IFormCollection and CancellationToken
+		FromForm - inferred for IFormFile and IFormFileCollection
+		FromRoute -  is inferred for any action parameter name matching a parameter in the route template
+		FromQuery - is inferred for any other action parameters	
+	Return types
+		type
+		IActionResult - Ok()
+		ActionResult<T> - if (!tryget) NotFound() else object
+	
 Hosting
 	public Startup(IHostingEnvironment env, IConfiguration config, ILoggerFactory loggerFactory)
 
 Middlewares
 	IsDevelopment
-	show web site
+	show web site with middleware image
 	Use - Run
-	middleware as method/class
-	Map
-	
-	
-AspNetWebApi
-	ApiController
-	Route
-	
-	
-	
+	app.Run(async ctx => await ctx.Response.WriteAsync("Hello World"));	
+	app.Use(async (context, next) => await next.Invoke());	
+	? Map
+		
 Validation
+	[Required]
+	[StringLength(512)]
+	[Range(0, 999.99)]
+	custom: inherit ValidationAttribute, override IsValid
 
+Cache
+	response:
+		[ResponseCache]
+		services.AddResponseCaching();
+		app.UseResponseCaching(); (only 200)
+	in memory:
+		services.AddMemoryCache(); inject IMemoryCache
+	distributed: see later
+
+Logging
+	
+Configuration:
+	appsetting.json/arguments/etc
+	go to debugger
+	GetSection().Bind()		
+	
+Authentification is out of scope	
 
 Swagger
+    services.AddSwaggerGen(c =>
+    {
+        c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+    });
+	
+	// Enable middleware to serve generated Swagger as a JSON endpoint.
+    app.UseSwagger();
 
-Configuration
-	Options pattern
+    // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+    // specifying the Swagger JSON endpoint.
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    });
+	
+	

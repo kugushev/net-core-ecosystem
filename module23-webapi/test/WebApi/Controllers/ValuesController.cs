@@ -17,6 +17,7 @@ namespace WebApi.Controllers
             return new string[] { "value1", "value2" };
         }
 
+        [ResponseCache(Duration = 42)]
         // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
