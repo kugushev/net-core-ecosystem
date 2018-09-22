@@ -1,0 +1,49 @@
+Intro
+	Why distributed services?
+	
+
+Redis
+	Description
+	AspNet core cache:
+		InMemory
+		Distributed
+		TODO
+	Redis DSL
+		http://try.redis.io/
+		Basic:
+			SET company:name "EPAM" => GET company:name
+			SETNX company:name "Luxsoft"
+			SET students 10 => INCR students => DECR students => DEL students // all atomic
+			EXPIRE company:name 60 => TTL company:name // -2 expiered, -1 never expire
+			HELP <CMD>
+		List:
+			RPUSH students "" => LPUSH students "" => LRANGE students 0 -1 // like slises
+			GET students // error
+			LLEN students
+			LPOP students => RPOP students => LRANGE students 0 -1
+		Set:
+			SADD teachers "Igor" // result 1
+			SADD teachers "Igor" // result 0
+			SADD teachers "Jon Skit" => SREM teachers "Jon Skit"
+			SISMEMBER teachers "Igor" => SISMEMBER teachers "Igor1"
+			SMEMBERS teachers
+			? SUNION
+		Sorted Set:
+			ZADD modules 20 "ADO NET" => ZADD modules 21 "Net Core"  => ZRANGE modules 0 -1
+		Hashes: // good for objects
+			HSET modules:21 name "Net Core" => HMSET modules:21 length 2.5 visitors 8 
+			HGETALL modules:21 => HGET modules:21 name
+			HINCRBY modules:21 visitors 3 => HDEL modules:21 length => HGETALL modules:21
+	Stackexcahcnge Redis
+		TODO
+		
+Elasticsearch
+	Description (nosql, simple search, very fast)
+		Cluster, Node, Index
+	Curl:
+		GET /_cat/indices?v
+	Kibana:
+		TODO
+	NEST:
+		TODO
+	
