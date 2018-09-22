@@ -5,9 +5,29 @@ Intro
 Redis
 	Description
 	AspNet core cache:
+		dotnet new webapi
 		InMemory
+			services.AddMemoryCache(); => inject IMemoryCache
+			make immutable Student
+			if (!cache.TryGetValue(id, out Student entry))
+				entry = new Student(id, $"student {id}");
+                var options = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(30));
+                cache.Set(id, entry, options);			
 		Distributed
-		TODO
+			Microsoft.Extensions.Caching.Redis
+			services.AddDistributedRedisCache(options => options.Configuration = "localhost");
+			{
+				var encodedEntry = distributedCache.Get("student");
+				if (encodedEntry == null){
+					string fromDb = "Epam Student"; // get from DB
+					encodedEntry = Encoding.UTF8.GetBytes(fromDb);
+					distributedCache.Set("student", encodedEntry);
+					return ...
+				}
+				string entity = Encoding.UTF8.GetString(encodedEntry);
+				return ...			
+			go to Redis Desktop Manager
+			
 	Redis DSL
 		http://try.redis.io/
 		Basic:
@@ -35,15 +55,61 @@ Redis
 			HGETALL modules:21 => HGET modules:21 name
 			HINCRBY modules:21 visitors 3 => HDEL modules:21 length => HGETALL modules:21
 	Stackexcahcnge Redis
-		TODO
-		
+		StackExchange.Redis
+		ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost");
+		show how to make it singleton
+		Push:
+			IDatabase db = redis.GetDatabase();
+            db.ListRightPush("studentsList", value);
+		Get:
+			IDatabase db = redis.GetDatabase();
+            RedisValue[] students = db.ListRange("studentsList", 0 ,-1);
+			return students.Select(x => x.ToString()).ToList();
 Elasticsearch
 	Description (nosql, simple search, very fast)
 		Cluster, Node, Index
 	Curl:
-		GET /_cat/indices?v
+		localhost:9200
+		localhost:9200/_cat/indices?v
 	Kibana:
-		TODO
+		PUT students
+		GET students
+		PUT students/doc/1	{ }
+		GET students/doc/1
+		GET students/_search
+		DELETE students
 	NEST:
-		TODO
+		Basics:
+			var client = new ElasticClient(new Uri("http://localhost:9200"));
+			var student = new Student(1, "Batman");
+			var result = client.Index(student, i => i.Index("students").Type("doc").Id(student.Id).Refresh(null));
+		Bulk:			
+            var names = File.ReadAllText("CSV_Database_of_First_Names.csv");
+            var students = names.Split('\r').Select((name, id) => new Student { Id = id, Name = name, University = universities[id % universities.Length] });
+            var bulk = new BulkRequest {
+				Refresh = Refresh.True,
+                Operations = students.Select(x => new BulkIndexOperation<Student>(x) { Index = "students", Type = "doc" }).Cast<IBulkOperation>().ToList()
+            };
+            var result = client.Bulk(bulk);
+	Features:
+		POST students/_search { "query": { "match": { "name": "Jack Adelina"}}}
+		....
+		var settings = new ConnectionSettings(new Uri("http://localhost:9200")).DefaultIndex("students");
+        var client = new ElasticClient(settings);
+        var result = client.Search<Student>(s => s.Query(q => q.Match(m => m.Field(o => o.Name).Query(text))));
+        if (result.IsValid) return result.Hits.Select(x => x.Source).ToList();
+        return BadRequest();
+		....
+		POST students/_search { "query": { "match_phrase_prefix": { "name": "adel" }}}
+		POST students/_search { "query": { "term": { "university.govNum.keyword": { "value": "SPBGU" }}}}
+			"size" : 100,
+			"from" : 300
+		POST students/_search { "query": { "bool": { "must": [
+			{ "term": { "university.govNum.keyword": {"value": "SPBGU"}}},
+			{ "match":{ "name": "Keitha Kendall" }}]}}}
+		POST students/_search { "query": {"match_all": {}}, "aggs": {"my": { "cardinality": 
+			{"field": "university.name.keyword"}}},"size": 0}	
+		
+		
+		
 	
