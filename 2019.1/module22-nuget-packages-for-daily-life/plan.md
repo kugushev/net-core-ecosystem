@@ -1,0 +1,8 @@
+- Newtonsoft.Json
+- Automapper
+- Swashbuckle
+- Polly
+- FluentValidation
+- NodaTime
+- Serilog
+- SonarAnalyzer: show how to disable warnings and suppress it
