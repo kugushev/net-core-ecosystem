@@ -1,8 +1,17 @@
-- Newtonsoft.Json
-- Automapper
-- Swashbuckle
-- Polly
-- FluentValidation
-- NodaTime
-- Serilog
 - SonarAnalyzer: show how to disable warnings and suppress it
+  - как подключить
+  - как сделать suppress
+  - как управлять severity
+- Newtonsoft.Json
+  - Просто показать как использовать отдельно и зачем
+- Automapper
+  - Несколько use cases
+  - Сказать что stackowerflow рулит
+- Swashbuckle
+  - Показать пример конфигурации
+  - показать сгенеренный файл
+  - сломать и показать как починить
+- Polly
+  - попросить студентов написать собственную реализацию
+  - показать основные кейсы
+  - пройтись по интеграции с ASP и HttpClient
