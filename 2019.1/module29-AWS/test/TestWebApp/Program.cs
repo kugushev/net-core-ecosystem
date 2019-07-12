@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace SimpleWebApp
+namespace TestWebApp
 {
     public class Program
     {
@@ -19,10 +19,6 @@ namespace SimpleWebApp
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .UseKestrel(op => 
-                {
-                    op.ListenAnyIP(5000);
-                });
+                .UseStartup<Startup>();
     }
 }

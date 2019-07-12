@@ -1,21 +1,7 @@
-Dockerfile
-	hub.docker.com => microsoft/dotnet
-	
-	FROM microsoft/dotnet:2.1-aspnetcore-runtime
-	WORKDIR /app
-	EXPOSE 80
-	COPY bin/Release/netcoreapp2.1/publish/. .
-	ENTRYPOINT ["dotnet", "WebApp.dll"]
-	
-	docker build -t test1 .
-	docker run -p 80:80 --name my-test1 test1
-	
-Dockerfile ex	
-	Use VS scaffolding
-	docker build -t test2 -f .\WebApplicationDocker\Dockerfile .
-	docker run -p 80:80 --name my-test2 test2
+Prepare package
+	https://docs.microsoft.com/en-us/dotnet/core/deploying/deploy-with-cli#self-contained-deployment	
+	dotnet publish -c Release -r linux-x64 --self-contained true
 
-	docker exec -it my-test2 bash
 Ec2
 	Login
 	Region
@@ -26,6 +12,12 @@ Ec2
 Access	
 	chmod 400 .ssh/test.pem
 	sudo ssh -i .ssh/test.pem ubuntu@<public DNS>		
+	
+deploy
+	 sudo scp -r -i /mnt/c/Users/<username>/.ssh/test-ec2.pem publish ubuntu@<host>:/home/ubuntu/app
+	
+Build
+	dotnet publish -c Release
 	
 install dotnet runtime
 	https://www.microsoft.com/net/download/linux-package-manager/ubuntu18-04/runtime-2.0.8
@@ -38,5 +30,8 @@ install dotnet runtime
 deploy
 	 sudo scp -r -i /mnt/c/Users/<username>/.ssh/test-ec2.pem publish ubuntu@<host>:/home/ubuntu/app
 	 
-	 
+AWS Services
+	IAAS
+	PAAS
+	SAAS
 	
