@@ -1,24 +1,49 @@
 Dockerfile
-	hub.docker.com => microsoft/dotnet
+	open https://github.com/wsargent/docker-cheat-sheet
+	Class work:
+		A container that uses just built dlls
+		Create a container that builds solution from sources
+		Multistage build
 	
-	FROM microsoft/dotnet:2.1-aspnetcore-runtime
-	WORKDIR /app
-	EXPOSE 80
-	COPY bin/Release/netcoreapp2.1/publish/. .
-	ENTRYPOINT ["dotnet", "WebApp.dll"]
+Scaffolding issues	
+	Review Output (debug/release):
+		Entrypoint
+		Target - app
+		Leaky containers
+	Go deeper:
+		docker exec -it my-test2 bash
+		docker top <container>	
 	
-	docker build -t test1 .
-	docker run -p 80:80 --name my-test1 test1
-	
-Dockerfile ex	
-	Use VS scaffolding
-	docker build -t test2 -f .\WebApplicationDocker\Dockerfile .
-	docker run -p 80:80 --name my-test2 test2
+Compose:
+	Review output
+	Support multiple bases
+	! docker compose build vs docker compose up !
+-----------------------------------------------------------------
+version: "3.6"
 
-	docker exec -it my-test2 bash
-	
-	
-TODO: 
-- add to docker registry
-- launch on linux machine
-- ??? kubernetes ???
+services:
+  application:
+    environment:
+      - ASPNETCORE_URLS=https://+:443
+    container_name: application
+    image: ${DOCKER_REGISTRY:-}application:${IMAGE_VERSION:-dev}
+    build:
+      context: .
+      dockerfile: Application/Dockerfile
+    ports:
+      - "52431:443"
+    networks:
+      - dev-postgres-net	
+
+  test-postgres:
+    image: postgres:10
+    container_name: test-postgres
+    networks:
+      - test-postgres-net
+    labels:
+      - local.dev.postgres
+
+networks:
+  test-postgres-net:
+    name: test-postgres-net
+-----------------------------------------------------------------	

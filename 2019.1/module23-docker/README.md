@@ -3,7 +3,7 @@ Show presentation #2
 
 Ubuntu in docker	
 	docker pull ubuntu:latest
-	docker create -it ubuntu --name my /bin/bash
+	docker create -it --name my ubuntu /bin/bash
 		-i - interactive
 		-t - tty (console attach)
 	docker start my
