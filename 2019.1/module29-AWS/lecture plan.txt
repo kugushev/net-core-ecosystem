@@ -1,3 +1,10 @@
+About
+	Evolution
+	IaaS, PaaS, SAAS
+	What does it mean for dev?
+		Money
+		
+
 Prepare package
 	https://docs.microsoft.com/en-us/dotnet/core/deploying/deploy-with-cli#self-contained-deployment	
 	dotnet publish -c Release -r linux-x64 --self-contained true
@@ -5,7 +12,10 @@ Prepare package
 Ec2
 	Login
 	Region
+	Availability Zones
+	AMI (Amazon Machine Image)
 	EC2 -> Launch Instance
+	Instance Types
 	Security Group: TCP 5000
 	say about VPC
 
@@ -31,7 +41,6 @@ deploy
 	 sudo scp -r -i /mnt/c/Users/<username>/.ssh/test-ec2.pem publish ubuntu@<host>:/home/ubuntu/app
 	 
 AWS Services
-	IAAS
-	PAAS
-	SAAS
+	ILB
+	RDS
 	
