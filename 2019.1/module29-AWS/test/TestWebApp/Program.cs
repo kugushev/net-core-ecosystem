@@ -18,7 +18,8 @@ namespace TestWebApp
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+            WebHost.CreateDefaultBuilder(args)                
+                .UseStartup<Startup>()
+                .UseKestrel(op => op.ListenAnyIP(5000));
     }
 }
