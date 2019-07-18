@@ -35,6 +35,9 @@ install dotnet runtime
 deploy
 	 sudo scp -r -i /mnt/c/Users/<username>/.ssh/test-ec2.pem publish ubuntu@<host>:/home/ubuntu/app
 
+Check:
+	http://<host>:5000/api/values
+
 Lambda
 	Create Lambda from Scaffolding
 	USE OBJECTS INSTEAD OF STRING
@@ -53,5 +56,8 @@ API Gateway
  https://h8rf7j2i24.execute-api.eu-central-1.amazonaws.com/prod/values
  
 Access from Lambda to EC2
-
-Access from Lambda to RDS or S3
+	Create HttpClient
+	Run locally
+	Add IP	
+	Publish
+	Enable VPC
