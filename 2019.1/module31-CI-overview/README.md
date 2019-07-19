@@ -1,8 +1,3 @@
-TODO: 
-- explan the purpose of CI
-- add Jenkins Guide
-- add Ansible Guide
-
 CI Concept
 - Draw CI diagram
 - Quality Gates: Analyzers, Unit Tests, Integration Tests
@@ -15,6 +10,20 @@ CI Concept
 	- Often Commits
 	- Build on Change
 - Continious Delivery => No manual QA
+
+How to use Jenkins
+
+
+
+
+How to install Jenkins
+- Use Docker
+- Plugins
+- Password
+- Global Tool Configuration
+
+
+
 
 	
 
