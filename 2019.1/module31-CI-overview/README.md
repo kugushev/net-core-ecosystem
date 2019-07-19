@@ -12,7 +12,10 @@ CI Concept
 - Continious Delivery => No manual QA
 
 How to use Jenkins
-- Create a simple job
+- Explain UI
+- Create a simple job (echo Hello World)
+
+Create Build Job
 - Retrieve from Git
 - Build Trigger on Git
 	- Explain Cron
@@ -22,19 +25,22 @@ cd 2019.1/module31-CI-overview/AppTests
 dotnet test
 ```
 - Add compile error and commit
+- Show Workspace
+- Archive artifacts: 2019.1/module31-CI-overview/TestApp/bin/Release/netcoreapp2.2/publish/*
+	- Last Successful Artifact permalink
 
+Create Deploy Job
+- Parameters
+	- It is an environment variable
+	- Show Jenkins default variables
+	- Explain default parameters
+```
+cd 2019.1/module31-CI-overview/AppTests
+IF NOT %ignore_tests% dotnet test
+```
 
 How to install Jenkins
 - Use Docker
 - Plugins
 - Password
 - Global Tool Configuration
-
-
-
-
-	
-
-Deploy to AWS
-- Use Binami image
-- Go to help to retrieve a credentials information
