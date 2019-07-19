@@ -14,7 +14,7 @@ namespace AppTests
         [Fact]
         public void ShouldBeFailed()
         {
-            Assert.True(false);
+            Assert.True(true);
         }
 
     }

@@ -18,11 +18,10 @@ How to use Jenkins
 	- Explain Cron
 - Build application
 ```
-cd 2019.1/module31-CI-overview/TestApp
-dotnet publish -c Release
+cd 2019.1/module31-CI-overview/AppTests
+dotnet test
 ```
 - Add compile error and commit
-
 
 
 How to install Jenkins
