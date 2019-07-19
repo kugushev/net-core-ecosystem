@@ -28,16 +28,16 @@ dotnet test
 - Show Workspace
 - Archive artifacts: 2019.1/module31-CI-overview/TestApp/bin/Release/netcoreapp2.2/publish/*
 	- Last Successful Artifact permalink
-
-Create Deploy Job
 - Parameters
 	- It is an environment variable
 	- Show Jenkins default variables
 	- Explain default parameters
 ```
 cd 2019.1/module31-CI-overview/AppTests
-IF NOT %ignore_tests% dotnet test
+if %run_tests%==true dotnet test
 ```
+
+Mention Plugins
 
 How to install Jenkins
 - Use Docker
