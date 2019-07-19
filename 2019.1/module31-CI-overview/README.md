@@ -12,7 +12,16 @@ CI Concept
 - Continious Delivery => No manual QA
 
 How to use Jenkins
-
+- Create a simple job
+- Retrieve from Git
+- Build Trigger on Git
+	- Explain Cron
+- Build application
+```
+cd 2019.1/module31-CI-overview/TestApp
+dotnet publish -c Release
+```
+- Add compile error and commit
 
 
 
