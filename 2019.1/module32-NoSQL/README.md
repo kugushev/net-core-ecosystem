@@ -28,3 +28,13 @@ Performance:
 - Indexing
 - Sharding
 - Replication
+
+
+
+DOUBLECHECK:
+_id - from timestamp
+Search in arrays
+Explain
+C# Mongo Client
+Entity Framework
+Indexes
